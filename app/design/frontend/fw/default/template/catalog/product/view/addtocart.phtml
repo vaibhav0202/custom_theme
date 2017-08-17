@@ -1,0 +1,59 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+
+/** @var Mage_Core_Model_Product $product */
+$product = $this->getProduct();
+
+/** @var Mage_CatalogInventory_Model_Stock_Item $stockItem */
+$stockItem = $product->getStockItem();
+?>
+<?php $buttonTitle = Mage::helper('core')->quoteEscape($this->__('Add to Cart')); ?>
+<?php if($product->isSaleable()): ?>
+    <div class="add-to-cart">
+        <?php if(!$product->isGrouped()): ?>
+        <div class="qty-wrapper<?php if($product->getSoldByLength()) echo ' soldbylength' ?>">
+            <?php if($product->getSoldByLength() == 1): ?>
+                <p class="heading">Select a Quantity</p>
+                <?php if ($this->getMinimalQty($product) > 1): ?>
+                    <p class="min-length"><span>*</span>You must select <?php echo Mage::helper('fw_soldbylength')->getYards($this->getMinimalQty($product)) ?> or more.</p>
+                <?php endif ?>
+                <input class="qty" type="hidden" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" />
+                <div class="qty-whole">
+                    <?php $w = floor($this->getProductDefaultQty() / 8) ?>
+                    <select name="qty-whole">
+                        <?php for ($i = 0; $i <= 20; $i++): ?>
+                            <option value="<?php echo $i ?>"<?php if ($w == $i) echo " selected" ?>>
+                                <?php echo $i ?>
+                            </option>
+                        <?php endfor ?>
+                    </select>
+                    <label for="qty-whole"><?php echo $this->__('Whole') ?></label>
+                </div>
+                <div class="qty-fraction">
+                    <?php $f = $this->getProductDefaultQty() % 8; ?>
+                    <select name="qty-fraction">
+                        <?php $incrementBy = $stockItem->getEnableQtyIncrements() ? $stockItem->getQtyIncrements() : 1 ?>
+                        <?php for ($i = 0; $i < 8; $i = $i + $incrementBy): ?>
+                            <option value="<?php echo $i ?>"<?php if ($f == $i) echo " selected" ?>>
+                                <?php echo $i ? Mage::helper('fw_soldbylength')->getFraction($i) : '--' ?>
+                            </option>
+                        <?php endfor ?>
+                    </select>
+                    <label for="qty-fraction"><?php echo $this->__('Fraction') ?></label>
+                </div>
+                Yards
+            <?php else: ?>
+                <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                <input type="text" pattern="\d*" name="qty" id="qty" maxlength="12" value="<?php echo max($this->getProductDefaultQty() * 1, 1) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+            <?php endif ?>
+        </div>
+        <?php endif; ?>
+        <div class="add-to-cart-buttons">
+            <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+            <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
+    </div>
+<?php endif; ?>

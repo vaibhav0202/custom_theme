@@ -1,0 +1,25 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_options = Mage::helper('core')->decorateArray($this->getOptions()); ?>
+<?php if ($_product->isSaleable()):?>
+    <?php if (count($_options)): ?>
+        <dl>
+        <?php foreach ($_options as $_option): ?>
+            <?php $_selections = $_option->getSelections() ?>
+            <?php if (!$_selections) continue ?>
+            <?php if ($_option->getRequired() && count($_selections) < 2): ?>
+                <input type="hidden" name="bundle_option[<?php echo $_option->getId() ?>]" value="<?php echo $_selections[0]->getSelectionId() ?>" />
+            <?php else: ?>
+                <?php echo $this->getOptionHtml($_option) ?>
+            <?php endif ?>
+        <?php endforeach; ?>
+        </dl>
+    <?php else: ?>
+        <p><?php echo $this->__('No options of this product are available.') ?></p>
+    <?php endif; ?>
+<?php endif;?>

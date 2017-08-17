@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * This rewrite removes my account functionality while maintaining core frontend functionality
+ *
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="footer">
+            <block type="cms/block" name="newsletter_callout">
+                <action method="setBlockId"><block_id>newsletter_callout</block_id></action>
+            </block>
+            <block type="newsletter/subscribe" name="footer.newsletter" as="newsletter" template="newsletter/subscribe.phtml"/>
+        </reference>
+    </default>
+</layout>

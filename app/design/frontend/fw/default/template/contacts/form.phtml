@@ -1,0 +1,122 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo Mage::helper('contacts')->__('Contact Us') ?></h1>
+</div>
+<form action="<?php echo $this->getFormAction(); ?>" id="contactForm" method="post" class="scaffold-form">
+    <div class="fieldset">
+        <h2 class="legend"><?php echo Mage::helper('contacts')->__('Contact Information') ?></h2>
+        <? //FW Customization START ?>
+        <?php echo $this->getChildHtml('intro'); ?>
+        <? //FW Customization END?>
+        <p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="field">
+                    <label for="name" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Name') ?></label>
+                    <div class="input-box">
+                        <input name="name" id="name" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Name')) ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" />
+                    </div>
+                </div>
+                <div class="field">
+                    <? //FW Customization START ?>
+                    <? // changed 'email to 'email2' because there is a new custom input added in this file named 'email' ?>
+                    <label for="email2" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Email:') ?></label>
+                    <div class="input-box">
+                        <input name="email2" id="email2" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Email:')) ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="text" />
+                    </div>
+                    <? //FW Customization END?>
+                </div>
+            </li>
+            <li>
+                <? //FW Customization START ?>
+                <? // changed core telephone field to confirmation email field ?>
+                <label for="confirm-email" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Confirm Email:') ?></label>
+                <div class="input-box">
+                    <input name="confirm-email" id="confirm-email" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Confirm Email:')) ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-confirm-email" type="text" />
+                </div>
+                <? //FW Customization END?>
+            </li>
+            <? //FW Customization START ?>
+            <? //Added custom 'qustions or Issue" dropdown selector ?>
+            <li class="fields">
+                <div class="field">
+                    <label for="issue" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Question or Issue:') ?></label>
+                    <div class="input-box">
+                        <select name="issue" id="issue" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Question or Issue:')) ?>" class="required-entry">
+                            <option value=""></option>
+                            <option value="account_access">Account Access</option>
+                            <option value="product_details">Product Details</option>
+                            <option value="email_changes">Email Changes</option>
+                            <option value="help_with_existing_order">Help With Existing Order</option>
+                            <option value="magazine_subscription">Magazine Subscription</option>
+                            <option value="order_arrival_date">Order Arrival Date</option>
+                            <option value="eproduct_download">eProduct Download</option>
+                            <option value="other">Other</option>
+                            <option value="pattern_questions">Pattern Questions</option>
+                            <option value="retail_support">Retail Support</option>
+                            <option value="returns_refunds">Returns/Refunds</option>
+                            <option value="tv_site">TV Site</option>
+                            <option value="university_site">University Site</option>
+                            <option value="webinar">Webinar</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <? //FW Customization END?>
+            <li class="wide">
+                <label for="comment" class="required"><em>*</em><?php echo Mage::helper('contacts')->__('Comment') ?></label>
+                <div class="input-box">
+                    <textarea name="comment" id="comment" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Comment')) ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <? //FW Customization START ?>
+        <input name="email" id="email" type="hidden" value="sitesupport@fwmedia.com" />
+        <input name="subject" id="subject" type="hidden" />
+        <? //FW Customization END?>
+        <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('contacts')->__('Submit')) ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
+    </div>
+</form>
+<? //FW Customization START ?>
+<p class="contact-detail"><?php echo Mage::helper('contacts')->__('Please provide complete detail on your issue so we can quickly and thoroughly respond to your inquiry.  Thank you.'); ?></p>
+<? //FW Customization END?>
+<script type="text/javascript">
+//<![CDATA[
+    var contactForm = new VarienForm('contactForm', true);
+    <? //FW Customization START ?>
+    Validation.add('validate-confirm-email', 'ERROR: Your email addresses do not match.', function(v) {
+        return (v == $F('email2'));
+    });
+    contactForm.form.observe('submit', function() { $('subject').setValue($('issue')[$('issue').selectedIndex].text); });
+    <? //FW Customization END?>
+//]]>
+</script>

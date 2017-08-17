@@ -1,0 +1,44 @@
+// ================================
+// Mixin - Buttons
+// ================================
+
+
+@mixin button-gradient($topcolor, $bottomcolor) {
+	background: $bottomcolor;
+	background: -webkit-gradient(linear, left top, left bottom, from($topcolor), to($bottomcolor));
+	background: -webkit-linear-gradient(top, $topcolor, $bottomcolor);
+	background: -moz-linear-gradient(top, $topcolor, $bottomcolor);
+	background: -ms-linear-gradient(top, $topcolor, $bottomcolor);
+	background: -o-linear-gradient(top, $topcolor, $bottomcolor);
+	border-top: 1px solid lighten($topcolor, 10%);
+	border-left: 1px solid lighten($topcolor, 10%);
+	border-bottom: 1px solid darken($bottomcolor, 10%);
+	border-right: 1px solid darken($bottomcolor, 10%);
+    display: inline-block;
+    padding: 7px 15px;
+	border-radius: 10px;
+    color: #FFFFFF;
+    font-size: $f-size-s;
+    font-weight: normal;
+    font-family: $f-stack-special;
+    line-height: 19px;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    &:hover {
+        background: darken($bottomcolor, 1%);
+        cursor: pointer;
+    }
+
+    &:disabled {
+        background: $bottomcolor;
+        background: -webkit-gradient(linear, left top, left bottom, from($topcolor), to($bottomcolor));
+        background: -webkit-linear-gradient(top, $topcolor, $bottomcolor);
+        background: -moz-linear-gradient(top, $topcolor, $bottomcolor);
+        background: -ms-linear-gradient(top, $topcolor, $bottomcolor);
+        background: -o-linear-gradient(top, $topcolor, $bottomcolor);
+        cursor: not-allowed;
+    }
+}

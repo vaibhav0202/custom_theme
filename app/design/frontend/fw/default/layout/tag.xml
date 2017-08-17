@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This file is added to remove all tag related layout updates
+ *
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+</layout>

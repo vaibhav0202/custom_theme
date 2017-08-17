@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+    <onestepcheckout_index_index>
+        <reference name="login-popup">
+            <block type="cms/block" name="cms_block_customer_account_login_popup">
+                <action method="setBlockId"><block_id>customer_account_login_popup</block_id></action>
+            </block>
+        </reference>
+    </onestepcheckout_index_index>
+</layout>

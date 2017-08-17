@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+    <PRODUCT_TYPE_bundle>
+        <reference name="product.info.availability">
+            <action method="setTemplate">
+                <template>catalog/product/view/type/availability/default.phtml</template>
+            </action>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+</layout>

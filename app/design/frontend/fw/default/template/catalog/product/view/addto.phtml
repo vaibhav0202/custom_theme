@@ -1,0 +1,15 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+
+/** @var Mage_Core_Model_Product $_product */
+$_product = $this->getProduct();
+?>
+<ul class="add-to-links">
+<?php if ($this->helper('wishlist')->isAllow()) : ?>
+    <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+<?php endif; ?>
+    <li><a href="/no-quibble" class="no-quibble">Our No-Quibble Guarantee</a></li>
+</ul>

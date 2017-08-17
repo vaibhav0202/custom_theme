@@ -1,0 +1,16 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+
+/**
+ * @see Mage_CatalogInventory_Block_Qtyincrements
+ */
+?>
+<?php $product = Mage::registry('current_product') ?>
+<?php if ($this->getProductQtyIncrements() && !$product->getSoldByLength()) : ?>
+    <div class="product-pricing">
+        <?php echo $this->__('%s is available for purchase in increments of %s', $this->getProductName(), $this->getProductQtyIncrements()) ?>
+    </div>
+<?php endif ?>

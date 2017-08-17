@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="removeItem"><type>skin_css</type><name>css/madisonisland.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/madisonisland-ie8.css</name></action>
+            <action method="removeItem"><type>link_rel</type><name>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/fw.js</name></action>
+        </reference>
+        <reference name="header">
+            <block type="cms/block" name="header_social_links">
+                <action method="setBlockId"><block_id>header_social_links</block_id></action>
+            </block>
+            <block type="core/template" template="page/html/welcome.phtml" name="welcome" as="welcome"/>
+        </reference>
+        <reference name="footer">
+            <remove name="footer_links" />
+            <remove name="footer_links2" />
+            <block type="cms/block" name="footer_promo">
+                <action method="setBlockId"><block_id>footer_promo</block_id></action>
+            </block>
+            <block type="cms/block" name="footer_links3">
+                <action method="setBlockId"><block_id>footer_links3</block_id></action>
+            </block>
+            <block type="cms/block" name="footer_links4">
+                <action method="setBlockId"><block_id>footer_links4</block_id></action>
+            </block>
+        </reference>
+        <reference name="right">
+            <remove name="catalog.compare.sidebar" />
+        </reference>
+    </default>
+</layout>

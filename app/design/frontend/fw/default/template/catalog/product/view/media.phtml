@@ -1,0 +1,58 @@
+<?php
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ *
+ * @category    design
+ * @package     fw_default
+ */
+
+/** @var Mage_Catalog_Block_Product_View_Media $this */
+
+/** @var Mage_Core_Model_Product $product */
+$product = $this->getProduct();
+?>
+<div class="product-image product-image-zoom">
+    <div class="product-image-gallery">
+        <img id="image-main"
+             class="gallery-image visible"
+             src="<?php echo $this->helper('catalog/image')->init($product, 'image') ?>"
+             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+             title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" 
+             itemprop="image"/>
+
+        <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
+            <?php if ($this->isGalleryImageVisible($_image)): ?>
+            <img id="image-<?php echo $i; ?>"
+                 class="gallery-image"
+                 src="<?php echo $this->getGalleryImageUrl($_image); ?>"
+                 data-zoom-image="<?php echo  $this->getGalleryImageUrl($_image); ?>" />
+            <?php endif; ?>
+        <?php $i++; endforeach; ?>
+    </div>
+    <?php if($product->getHasRuler()) : ?>
+        <img class="tape-measure" src="<?php echo $this->getSkinUrl('images/tapemeasure.jpg') ?>" alt="tape measure" />
+        <span class="tape-measure-text">Fabrics are shown in 8&Prime; scale</span>
+    <?php endif; ?>
+</div>
+
+<?php if (count($this->getGalleryImages()) > 0 && !$product->isGrouped()): ?>
+<div class="more-views">
+    <h2><?php echo $this->__('More Views') ?></h2>
+    <ul class="product-image-thumbs">
+    <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
+        <?php if ($this->isGalleryImageVisible($_image)): ?>
+        <li>
+            <a class="thumb-link" href="#" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>" data-image-index="<?php echo $i; ?>">
+                <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75); ?>"
+                     width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
+            </a>
+        </li>
+        <?php endif; ?>
+    <?php $i++; endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+<?php echo $this->getChildHtml('after'); ?>

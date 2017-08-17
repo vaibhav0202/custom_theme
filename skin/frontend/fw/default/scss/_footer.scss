@@ -1,0 +1,126 @@
+.footer-container {
+    max-width: 1200px;
+    background-color: $footer-bg;
+    padding-bottom: 0;
+
+    .footer {
+        border-top: 0 none;
+
+        .footer-promo {
+
+            @include bp(max-width, $bp-large) { width: 50%; }
+            @include bp(min-width, $bp-large + 1) { width: 65%; }
+            @include bp(max-width, $bp-medium) { width: 100%; }
+
+            color: #FFFFFF;
+            overflow: hidden;
+
+            h3, a {
+                color: #FFFFFF;
+                text-transform: none;
+                font-weight: bold;
+            }
+
+            img {
+                float: left;
+                margin-right: 20px;
+            }
+        }
+
+        .footer-links {
+            clear: both;
+            overflow: hidden;
+            margin: 15px -30px 0;
+            padding: 30px;
+            background-color: $footer-links-bg;
+            @include bp(max-width, $bp-xsmall) {
+                margin-bottom: 45px;
+            }
+
+            img {
+                float: left;
+                margin-right: 50px;
+                margin-top: 30px;
+                @include bp(max-width, $bp-large) { margin-top: 0; }
+            }
+
+            a {
+                color: #FFFFFF;
+                float: left;
+                clear: both;
+            }
+
+            .link-col {
+                float: left;
+                margin-right: 30px;
+                width: 175px;
+                @include bp(max-width, $bp-large) { margin-top: 20px; }
+                @include bp(max-width, 670px) { clear: both; }
+
+                &.left-col {
+                    @include bp(max-width, $bp-large) { clear: left; }
+                }
+
+                &.right-col {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        address {
+            border-top: 0 none;
+            background-color: $footer-links-bg;
+            margin: 0;
+            padding: 5px 30px;
+            width: auto;
+            color: #FFFFFF;
+        }
+
+        .block-title strong {
+            color: #FFFFFF;
+        }
+
+        .newsletter-callout {
+            float: right;
+            margin-bottom: 15px;
+            @include bp(min-width, $bp-medium + 1) {
+                width: 320px;
+            }
+
+            h3 {
+                font-size: 18px;
+                color: #FFFFFF;
+            }
+
+            p {
+                font-size: 13px;
+                color: #FFFFFF;
+            }
+        }
+
+        .block-subscribe {
+            clear: both;
+        }
+    }
+
+    &:after {
+
+        @include bp(min-width, $bp-medium + 1) {
+            background-color: #777; // Old browsers
+            @include filter-gradient(#777, #ffffff, horizontal); // IE6-9 fallback on horizontal gradient
+            @include background-image(radial-gradient(center, ellipse cover, #777 0%, #ffffff 78%));
+            content: " ";
+            display: block;
+            height: 27px;
+            margin-top: -27px;
+            position: relative;
+            z-index: -1;
+            bottom: -15px;
+        }
+    }
+
+    .copyright a {
+        color: #FFF;
+    }
+
+}

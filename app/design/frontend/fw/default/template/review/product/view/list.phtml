@@ -1,0 +1,73 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+
+$items = $this->getReviewsCollection()->getItems();
+?>
+<div class="box-collateral box-reviews" id="customer-reviews">
+    <?php if (count($items)): ?>
+        <div class="review-heading">
+            <h2>
+                <?php echo $this->__('Customer Reviews') ?>
+                <span><?php echo count($items); ?> item(s)</span>
+            </h2>
+            <?php echo $this->getChildHtml('toolbar') ?>
+        </div>
+        <dl>
+            <?php foreach ($items as $_review): ?>
+                <div class="review-item">
+                    <dt>
+                        <?php $_votes = $_review->getRatingVotes(); ?>
+                        <?php $summ = array(); // Get sum of the 3 rating values for overall rating value ?>
+                        <?php foreach ($_votes as $_vote): ?>
+                            <?php $summ[] = $_vote->getPercent(); ?>
+                        <?php endforeach; ?>
+                        <?php $summ_percent = (round((array_sum($summ) / 3) / 10) * 10) + 1; // Convert sum of ratings to percentage, round to nearest 0.5, and display with stars ?>
+                    <div class="ratings-table">
+                        <div class="rating-box">
+                            <div class="rating" style="width:<?php echo $summ_percent ?>%;"></div>
+                        </div>
+                    </div>
+                    <?php echo $this->__('<span class="review-user">%s</span>', $this->escapeHtml($_review->getNickname())) ?>
+                    </dt>
+                    <dd>
+                        <h3><?php echo $this->escapeHtml($_review->getTitle()) ?></h3>
+                        <?php echo nl2br($this->escapeHtml($_review->getDetail())) ?>
+                        <small class="date"><?php echo $this->__('<br />(Posted on %s)', $this->formatDate($_review->getCreatedAt()), 'long') ?></small>
+                    </dd>
+                    <div class="multi-ratings">
+                        <?php if (count($_votes)): ?>
+                            <table class="ratings-table">
+                                <col width="1"/>
+                                <col/>
+                                <tbody>
+                                <?php foreach ($_votes as $_vote): ?>
+                                    <tr>
+                                        <td>
+                                            <h5><?php echo $_vote->getRatingCode() ?></h5>
+                                            <div class="rating-box">
+                                                <div class="rating"
+                                                     style="width:<?php echo $_vote->getPercent() ?>%;"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="multi-rating-summ">
+                                                <?php echo (($_vote->getPercent()) / 100) * 5 . '.0/5' // Convert rating percentage to N out of 5 ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </dl>
+    <?php elseif ($this->getParentBlock()): ?>
+        <?php echo $this->getParentBlock()->getReviewsSummaryHtml($this->getProduct(), 'summary', true) ?>
+    <?php endif; ?>
+    <?php echo $this->getChildHtml('review_form') ?>
+</div>

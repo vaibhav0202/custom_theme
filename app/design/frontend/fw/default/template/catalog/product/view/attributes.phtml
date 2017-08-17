@@ -1,0 +1,35 @@
+<?php
+/**
+ * Product additional attributes template
+ *
+ * @see Mage_Catalog_Block_Product_View_Attributes
+ * 
+ * @category    design
+ * @package     fw_default
+ */
+
+/** @var Mage_Catalog_Helper_Output $helper */
+$helper = $this->helper('catalog/output');
+
+/** @var Mage_Catalog_Model_Product $product */
+$product = $this->getProduct()
+?>
+<?php if($_additional = $this->getAdditionalData()): ?>
+    <table class="data-table" id="product-attribute-specs-table">
+        <col width="25%" />
+        <col />
+        <tbody>
+        <?php foreach ($_additional as $_data): ?>
+            <?php $_attribute = $product->getResource()->getAttribute($_data['code']);
+            $nop = ($_data['code'] == 'number_of_pages' && $_data['value'] == 0) ? true : false;
+            if (!is_null($product->getData($_attribute->getAttributeCode())) && ((string)$_attribute->getFrontend()->getValue($product) != '') && $nop == false) { ?>
+                <tr>
+                    <th class="label"><?php echo $this->escapeHtml($this->__($_data['label'])) ?>:</th>
+                    <td class="data"><?php echo $helper->productAttribute($product, $_data['value'], $_data['code']) ?></td>
+                </tr>
+            <?php } ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('product-attribute-specs-table')</script>
+<?php endif;?>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    design
+ * @package     fw_default
+ */
+-->
+<layout version="0.1.0">
+    <customer_account_login>
+        <reference name="customer_form_login">
+            <block type="cms/block" name="cms_block_customer_account_login">
+                <action method="setBlockId"><block_id>customer_account_login</block_id></action>
+            </block>
+        </reference>
+    </customer_account_login>
+</layout>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * @category    design
+ * @package     fw_default
+ */
+
+$_product = $this->getProduct();
+$preOrderHelper = $this->helper('productcustom/data');
+$prodStock = $_product->getStockItem()->getQty();
+$backOrder = $_product->getStockItem()->getBackorders();
+$manageStock = $_product->getStockItem()->getManageStock();
+$productType = $_product->getTypeId();
+
+// if bundle product check child products' availability
+if ($productType == 'bundle') {
+    $selectionCollection = $_product
+        ->getTypeInstance(true)
+        ->getSelectionsCollection($_product->getTypeInstance(true)->getOptionsIds($_product), $_product);
+    $bundled_items = array();
+    $bundleStockStatus = "";
+    foreach ($selectionCollection as $option) {
+        $bundled_items[] = $option->product_id;
+        $itemStock = $option->getStockItem()->getQty();
+        $itemProductData = Mage::getModel('catalog/product')->load($option->getProductId());
+        //set stock flags
+        if ($itemStock <= 0 && $option->getTypeId() != "downloadable") {
+            if ($preOrderHelper->isPreOrderProduct($itemProductData) == "1" && $bundleStockStatus != "pre-order") {
+                $bundleStockStatus = "pre-order";
+            } else {
+                $bundleStockStatus = "back-order";
+            }
+        }
+    }
+}
+?>
+
+<?php if ($this->displayProductStockStatus()): ?>
+    <?php if ($_product->isAvailable()): ?>
+        <?php if ($preOrderHelper->isPreOrderProduct($_product) || ($productType == 'bundle' && $bundleStockStatus == 'pre-order')): ?>
+            <p class="availability pre-order">
+                <meta itemprop="availability" content="PreOrder" />
+                <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
+                <span class="value"><?php echo $this->helper('catalog')->__('Available for pre-order') ?></span>
+            </p>
+            <?php if ($preDate = $preOrderHelper->getPreOrderAvailabilityDate($_product)): ?>
+                <p class="availability message">
+                    <span class="label"><?php echo $this->helper('catalog')->__('Estimated Ship Date:') ?></span>
+                    <span class="value"><?php echo date('m/d/y', strtotime($preDate)) ?></span>
+                </p>
+            <?php endif ?>
+        <?php elseif ($prodStock <= 0 && $backOrder != 0 && $manageStock != 0): ?>
+            <p class="availability in-stock">
+                <meta itemprop="availability" content="PreOrder" />
+                <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
+                <span class="value temp"><?php echo $this->helper('catalog')->__('Temporarily out of stock') ?></span>
+                <span class="backorder">Order now and we'll ship this item when it becomes available.</span>
+            </p>
+            <?php if ($availDate = $_product->getWarehouseAvailDate()): ?>
+                <p class="availability message">
+                    <span class="label"><?php echo $this->helper('catalog')->__('Expected Date:') ?></span>
+                    <span class="value"><?php echo date('m/d/y', strtotime($availDate)) ?></span>
+                </p>
+            <?php endif ?>
+        <?php else: ?>
+            <p class="availability in-stock">
+                <meta itemprop="availability" content="InStock" />
+                <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
+                <span class="value"><?php echo $this->helper('catalog')->__('In stock') ?></span>
+            </p>
+        <?php endif ?>
+    <?php else: ?>
+        <p class="availability out-of-stock">
+            <meta itemprop="availability" content="OutOfStock" />
+            <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
+            <span class="value"><?php echo $this->helper('catalog')->__('Out of stock') ?></span>
+        </p>
+    <?php endif; ?>
+<?php endif; ?>
