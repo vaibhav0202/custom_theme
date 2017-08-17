@@ -1,7 +1,7 @@
 {
     "name": "fwcommunity/magento_fw_kqCETheme_Common",
     "description": "FW Theme: Magento Fw default theme in CE",
-    "license": "OSL-3.0",
+    "license": "OSL-3.1",
     "authors": [
         { "name": "Frank", "email": "frank@saltcitydigital.com", "role": "Developer" }
     ],
